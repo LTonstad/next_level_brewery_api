@@ -20,6 +20,8 @@ def main():
         } # type: ignore
     )
     
+    st.title(":beers: Brewery API :beers:")
+    
     # User input as a streamlit form
     with st.form('query_form'):
         query_dict = {}
@@ -33,7 +35,7 @@ def main():
         query_dict['city'] = row1[0].text_input('Brewery City')
         query_dict['state'] = row1[0].text_input('Brewery State')
         query_dict['country'] = row1[0].text_input('Brewery Country')
-        query_dict['types'] = row1[1].multiselect(
+        query_dict['type'] = row1[1].multiselect(
             label = 'Brewery Type', 
             options=BREWERY_TYPES,
             default=None,
@@ -79,8 +81,8 @@ def main():
             use_container_width = True,
             hide_index = True
         )
-        # Offer manipulation options
-    
-    
+        # Plotly Visualizations
+        
+        
 if __name__ == "__main__":
     main()

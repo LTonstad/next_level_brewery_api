@@ -24,13 +24,16 @@ def http_get(url: str) -> JSONObject:
     response = requests.get(url)
     return response.json()
 
-def condense_query_dict(query_dict: dict[str | int | list]) -> dict[str | int | list]:
+def condense_query_dict(query_dict: dict[str | int | list[str]]) -> dict[str | int | list[str]]:
     condensed_query_dict = {}
     
     # Removing any keys that don't have any values
     for key, val in query_dict.items():
-        if type(val) == list and len(val) == 0:
-            continue
+        if type(val) == list:
+            if len(val) == 0:
+                continue
+            else:
+                condensed_query_dict[key] = [x.lower() for x in val]
         elif val == '':
             continue
         else:
@@ -38,7 +41,7 @@ def condense_query_dict(query_dict: dict[str | int | list]) -> dict[str | int | 
     
     return condensed_query_dict
 
-def build_obdb_query(query_dict: dict[str | int | list], query_limit: int = 5, query_meta: bool = False) -> str:
+def build_obdb_query(query_dict: dict[str | int | list[str]], query_limit: int = 5, query_meta: bool = False) -> str:
     if query_meta:
         url = META_OPEN_BREWERY_DB_URL
     else:
